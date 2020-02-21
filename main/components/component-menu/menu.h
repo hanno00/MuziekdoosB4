@@ -1,9 +1,10 @@
 #pragma once
 
-char** menuMain();
+int menuMain();
 int getKey();
 void handleMenu(int key);
 void printMenu(int menuID);
+void printCurrentMenu();
 void navigateTo(int);
 void decreaseTime(void);
 void increaseTime(void);

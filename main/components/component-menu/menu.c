@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <conio.h>
 #include <stdlib.h>
 
 #define LCD_LINES 4
@@ -34,6 +33,7 @@ int menuMain();
 int getKey();
 void handleMenu(int);
 void printMenu(int);
+void printCurrentMenu();
 
 // smart speaker navigational functions
 void navigateTo(int);
@@ -247,27 +247,23 @@ int menuMain()
 	
 	char** menucontents = menuText(currentMenuID);
 
+	// menucontents[0] t/m menucontents[3] zijn de 4 lines die je nodig hebt voor de LCD.
+	// handleMenu() zorgt voor het wisselen van schermen op het menu.
+	// getKey() leest input van het keyboard uit, alleen nodig op pc. 
 
-	while (1)
-	{
-		// menucontents[0] t/m menucontents[3] zijn de 4 lines die je nodig hebt voor de LCD.
-		// handleMenu() zorgt voor het wisselen van schermen op het menu.
-		// getKey() leest input van het keyboard uit, alleen nodig op pc. 
-
-		printf("\n%s\n", menucontents[0]);
-		printf("%s\n", menucontents[1]);
-		printf("%s\n", menucontents[2]);
-		printf("%s\n", menucontents[3]);
-		handleMenu(getKey());
-		menucontents = menuText(currentMenuID);
-	}
+	printf("\n%s\n", menucontents[0]);
+	printf("%s\n", menucontents[1]);
+	printf("%s\n", menucontents[2]);
+	printf("%s\n", menucontents[3]);
+	handleMenu(getKey());
+	menucontents = menuText(currentMenuID);
 	
 	return 0;
 }
 
 int getKey(void) 
 {
-	return _getch();
+	return 0;
 }
 
 void handleMenu(int key)
@@ -276,6 +272,7 @@ void handleMenu(int key)
 	{
 		case 'W':
 		case 'w':
+		case 1:
 			if (menu[currentMenuID].menuConnectedTo[0] == -1)
 			{
 				if (menu[currentMenuID].menuMethods[0] == NULL)
@@ -310,6 +307,7 @@ void handleMenu(int key)
 				navigateTo(menu[currentMenuID].menuConnectedTo[1]);
 			}
 			break;
+		case -1:
 		case 'S':
 		case 's':
 			if (menu[currentMenuID].menuConnectedTo[2] == -1)
@@ -377,6 +375,8 @@ void handleMenu(int key)
 			}
 			break;
 	}
+
+	printCurrentMenu();
 }
 
 void navigateTo(int destination)
@@ -387,6 +387,10 @@ void navigateTo(int destination)
 void printMenu(int menuID)
 {
 	printf("\n+------------------+\n%s\n%s\n%s\n%s\n+------------------+\n", menu[menuID].menuContents[0], menu[menuID].menuContents[1], menu[menuID].menuContents[2], menu[menuID].menuContents[3]);
+}
+
+void printCurrentMenu(){
+	printMenu(currentMenuID);
 }
 
 void decreaseTime(void) { printf("Time decreased!"); }

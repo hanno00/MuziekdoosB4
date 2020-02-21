@@ -3,6 +3,7 @@
 #include "components/component-funsparkRE/funsparkRE.h"
 #include "driver/i2c.h"
 #include "esp_log.h"
+#include "../component-menu/menu.h"
 
 // disable buffers
 static const size_t I2C_MASTER_TX_BUF_DISABLE = 0;
@@ -11,22 +12,25 @@ static const int INTR_FLAGS = 0;
 
 static const char *TAG = "I2C_RE";
 RE_t *RE;
-int 
 
 void Task_RE_Check_Diff(void * args){
+    
     uint16_t curr = 0;
     while (1)
     {
         RE_getDiff(&curr);
         if(curr > 1000){
-            *val = 1;
-        }else if(curr > 0){
-            *val = -1;
-        }else
-        {
-           *val = 0;
+            handleMenu(-1);
         }
-        vTaskDelay(100 / portTICK_RATE_MS);
+        else if(curr > 0)
+        {
+            handleMenu(1);
+        }
+        else
+        {
+            
+        }
+        vTaskDelay(2000 / portTICK_RATE_MS);
     }
     
 }

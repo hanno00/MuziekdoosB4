@@ -14,12 +14,13 @@
 #include "esp_log.h"
 
 #include "components/component-funsparkRE/funsparkRE.h"
+#include "components/component-menu/menu.h"
 
-
-static const char *TAG = "I2C_RE";
 RE_t re;
 void app_main()
 {
+    menuMain();
+
     re.i2c_address = RE_i2c_addr;
     re.sda_pin = 18;
     re.scl_pin = 23;
@@ -28,7 +29,6 @@ void app_main()
     xTaskCreate(Task_RE_Check_Diff,"task",5000,NULL,10,NULL);
     while (1)
     {
-        ESP_LOGV(TAG,"%d",data);
         vTaskDelay(100 / portTICK_RATE_MS);
     }
     
