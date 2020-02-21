@@ -11,6 +11,25 @@ static const int INTR_FLAGS = 0;
 
 static const char *TAG = "I2C_RE";
 RE_t *RE;
+int 
+
+void Task_RE_Check_Diff(void * args){
+    uint16_t curr = 0;
+    while (1)
+    {
+        RE_getDiff(&curr);
+        if(curr > 1000){
+            *val = 1;
+        }else if(curr > 0){
+            *val = -1;
+        }else
+        {
+           *val = 0;
+        }
+        vTaskDelay(100 / portTICK_RATE_MS);
+    }
+    
+}
 
 bool RE_isConnected()
 {
@@ -160,7 +179,6 @@ RE_err_t RE_read_register16(RE_reg_t reg_LSB, uint16_t *data)
     }
     uint16_t temp = ((uint16_t)MSB << 8 | LSB);
 
-    ESP_LOGI(TAG, "data: %d", temp);
     *data = temp;
     return ret;
 }

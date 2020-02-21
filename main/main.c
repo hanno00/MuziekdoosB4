@@ -16,7 +16,7 @@
 #include "components/component-funsparkRE/funsparkRE.h"
 
 
-
+static const char *TAG = "I2C_RE";
 RE_t re;
 void app_main()
 {
@@ -25,11 +25,11 @@ void app_main()
     re.scl_pin = 23;
 
 	ESP_ERROR_CHECK(RE_initialize(&re));
-
-	uint16_t dat = 0x00;
-	while (1)
-	{
-		RE_getDiff(&dat);
-		vTaskDelay(500 / portTICK_RATE_MS);
-	}
+    xTaskCreate(Task_RE_Check_Diff,"task",5000,NULL,10,NULL);
+    while (1)
+    {
+        ESP_LOGV(TAG,"%d",data);
+        vTaskDelay(100 / portTICK_RATE_MS);
+    }
+    
 }

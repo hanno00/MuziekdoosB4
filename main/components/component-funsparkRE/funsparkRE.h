@@ -72,6 +72,8 @@ typedef struct
 	uint8_t scl_pin;
 }RE_t;
 
+
+void Task_RE_Check_Diff(void * args );
 // init for the i2c connection
 RE_err_t RE_initialize(RE_t *re);
 // check if RE is Connected
