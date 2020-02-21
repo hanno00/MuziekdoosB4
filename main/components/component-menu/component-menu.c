@@ -406,7 +406,7 @@ void confirmFlipBoolean(void)
 		state = FALSE;
 }
 
-char** menuText(int menuID) 
+char** menuText(int menuID) // https://stackoverflow.com/questions/4085372/how-to-return-a-string-array-from-a-function
 {
 	char** sub_str = malloc(4 * sizeof(char*));
 
