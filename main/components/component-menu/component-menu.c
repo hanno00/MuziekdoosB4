@@ -412,7 +412,7 @@ char** menuText(int menuID) // https://stackoverflow.com/questions/4085372/how-t
 
 	for (int i = 0 ; i < 4; i++)
 	{
-		sub_str[i] = malloc(10 * sizeof(char));
+		sub_str[i] = malloc(20 * sizeof(char));
 		sub_str[i] = menu[menuID].menuContents[i];
 	}
 
